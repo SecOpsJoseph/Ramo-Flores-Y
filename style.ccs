@@ -1,0 +1,163 @@
+/* ==========================================
+   FLORES AMARILLAS - Style.css
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --fondo-tarjeta: #f5efe6;
+  --color-tronco: #8B5E3C;
+  --color-flor-amarilla: #FFD700;
+  --color-flor-oscura: #DAA520;
+  --color-centro: #3B1A0A;
+  --color-texto: #3a2a1a;
+  --letter-love: 480px;
+  --letter: var(--fondo-tarjeta);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1a0010;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Lora', serif;
+}
+
+/* ---- TARJETA PRINCIPAL ---- */
+.tarjeta {
+  background: var(--fondo-tarjeta);
+  border-radius: 20px;
+  width: 92vw;
+  max-width: 480px;
+  min-height: 560px;
+  position: relative;
+  overflow: hidden;
+  padding: 20px 20px 90px 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+/* ---- ÁRBOL CANVAS ---- */
+.arbol-container {
+  position: absolute;
+  top: 0;
+  right: -10px;
+  width: 65%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#arbolCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- TEXTO DE AMOR ---- */
+.texto-amor {
+  position: relative;
+  z-index: 2;
+  width: 55%;
+  min-height: 200px;
+  padding-top: 20px;
+}
+
+#carta {
+  font-family: 'Lora', serif;
+  font-size: 0.9rem;
+  color: var(--color-texto);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* Cursor parpadeante */
+#carta::after {
+  content: '_';
+  animation: blink 0.8s step-start infinite;
+  color: var(--color-texto);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ---- FLORES VOLANDO ---- */
+#flores-volando {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.Flores_Amarillas {
+  position: absolute;
+  width: 90%;
+  font-size: 1.2rem;
+  font-family: "Dancing Script", cursive;
+  height: var(--letter-love);
+  transform: translateX(-50%);
+  background: var(--letter);
+  /* cada flor individual usa top/left en JS */
+  width: auto;
+  height: auto;
+  transform: none;
+  background: none;
+  animation: caerFlor linear infinite;
+  opacity: 0.85;
+}
+
+@keyframes caerFlor {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  80%  { opacity: 0.7; }
+  100% { transform: translateY(120px) rotate(360deg); opacity: 0; }
+}
+
+/* ---- CONTADOR ---- */
+.contador-wrapper {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  border-top: 1.5px solid rgba(58,42,26,0.2);
+  z-index: 4;
+  background: var(--fondo-tarjeta);
+}
+
+.contador-label {
+  font-family: 'Lora', serif;
+  font-size: 0.78rem;
+  color: #7a6a5a;
+  margin-bottom: 4px;
+  font-style: italic;
+}
+
+.contador {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-texto);
+  letter-spacing: 0.5px;
+}
+
+.contador span {
+  font-size: 1.7rem;
+  color: #b8860b;
+  margin-right: 2px;
+}
+
+/* ---- ANIMACIÓN ENTRADA ÁRBOL ---- */
+@keyframes crecerArbol {
+  from { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+  to   { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
+}
