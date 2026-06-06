@@ -12,11 +12,11 @@
 // ============================================================
 
 // ► Fecha desde que comenzó tu amor (año, mes-1, día, hora, minuto, segundo)
-const FECHA_INICIO = new Date(2024, 5, 6, 0, 0, 0); // 6 de Junio 2024
+const FECHA_INICIO = new Date(2026, 4, 5, 7, 58, 0);
 
 // ► Texto que aparece letra a letra (usa \n para nueva línea)
 const TEXTO_AMOR =
-  "Flores Amarillas para el amor de mi vida:\n\n" +
+  "Flores Amarillas para mi vida:\n\n" +
   "Si pudiera elegir un lugar\nseguro, sería a tu lado.\n\n" +
   "Cuanto más tiempo estoy\ncontigo más te amo.\n\n" +
   "— I Love You! ";
