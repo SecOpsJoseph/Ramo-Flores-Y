@@ -1,0 +1,277 @@
+/* ==========================================
+   FLORES AMARILLAS - style.css  ✨ Glow Up
+   ========================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@700&family=Inter:wght@300;400&display=swap');
+
+:root {
+  --oro:        #F5C842;
+  --oro-claro:  #FFE87C;
+  --oro-oscuro: #B8860B;
+  --marron:     #8B5E3C;
+  --crema:      #FDF6E3;
+  --crema-suave:#F9EFD0;
+  --texto:      #2C1A0E;
+  --texto-suave:#6B4E2A;
+  --noche:      #0D0610;
+  --violeta:    #1A0828;
+  --glow-oro:   rgba(245, 200, 66, 0.35);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ---- FONDO CON ESTRELLAS ---- */
+body {
+  background: radial-gradient(ellipse at 30% 20%, #1e0a2e 0%, var(--noche) 60%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Cormorant Garamond', serif;
+  overflow: hidden;
+}
+
+#estrellas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#estrellas span {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: parpadeo var(--dur, 3s) ease-in-out infinite var(--del, 0s);
+}
+
+@keyframes parpadeo {
+  0%, 100% { opacity: var(--opmin, 0.15); transform: scale(1); }
+  50%       { opacity: var(--opmax, 0.9);  transform: scale(1.3); }
+}
+
+/* ---- TARJETA PRINCIPAL ---- */
+.tarjeta {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(160deg, var(--crema) 0%, var(--crema-suave) 100%);
+  border-radius: 28px;
+  width: 92vw;
+  max-width: 480px;
+  min-height: 580px;
+  overflow: hidden;
+  padding: 28px 24px 110px 24px;
+
+  /* Borde luminoso dorado */
+  border: 1.5px solid rgba(245, 200, 66, 0.5);
+  box-shadow:
+    0 0 0 1px rgba(245, 200, 66, 0.12),
+    0 0 40px var(--glow-oro),
+    0 20px 80px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+/* Esquina decorativa superior izquierda */
+.tarjeta::before {
+  content: '🌻';
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  font-size: 1.3rem;
+  opacity: 0.6;
+  z-index: 5;
+  filter: drop-shadow(0 0 6px var(--oro));
+}
+
+/* ---- ÁRBOL CANVAS ---- */
+.arbol-container {
+  position: absolute;
+  top: 0;
+  right: -6px;
+  width: 62%;
+  height: 100%;
+  pointer-events: none;
+}
+
+#arbolCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- TEXTO DE AMOR ---- */
+.texto-amor {
+  position: relative;
+  z-index: 2;
+  width: 58%;
+  min-height: 220px;
+  padding-top: 40px;
+}
+
+#carta {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.0rem;
+  font-weight: 400;
+  color: var(--texto);
+  line-height: 1.85;
+  white-space: pre-wrap;
+  letter-spacing: 0.01em;
+}
+
+/* Cursor parpadeante estilizado */
+#carta::after {
+  content: '|';
+  animation: blink 0.9s step-start infinite;
+  color: var(--oro-oscuro);
+  font-weight: 300;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ---- FLORES VOLANDO ---- */
+#flores-volando {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.Flores_Amarillas {
+  position: absolute;
+  width: auto;
+  height: auto;
+  transform: none;
+  background: none;
+  animation: caerFlor linear forwards;
+  filter: drop-shadow(0 0 4px rgba(255,200,0,0.6));
+}
+
+@keyframes caerFlor {
+  0%   {
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  40%  {
+    transform: translateY(40px) translateX(12px) rotate(140deg) scale(0.95);
+    opacity: 0.85;
+  }
+  75%  {
+    transform: translateY(85px) translateX(-8px) rotate(280deg) scale(0.9);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(130px) translateX(4px) rotate(400deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* ---- CONTADOR ---- */
+.contador-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 14px 22px 18px;
+  background: linear-gradient(to top, var(--crema-suave), transparent);
+  border-top: 1px solid rgba(184,134,11,0.2);
+  z-index: 4;
+}
+
+.contador-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--texto-suave);
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+
+.contador {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.contador-unidad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.05));
+  border: 1px solid rgba(245,200,66,0.3);
+  border-radius: 10px;
+  padding: 6px 10px;
+  min-width: 52px;
+  box-shadow: 0 2px 8px rgba(184,134,11,0.1);
+}
+
+.contador-unidad span {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--oro-oscuro);
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(245,200,66,0.4);
+}
+
+.contador-unidad small {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 300;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 3px;
+}
+
+.contador-sep {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.4rem;
+  color: var(--oro-oscuro);
+  opacity: 0.5;
+  align-self: flex-start;
+  padding-top: 6px;
+}
+
+/* ---- ANIMACIÓN ENTRADA ---- */
+@keyframes crecerArbol {
+  from { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+  to   { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
+}
+
+/* ---- ENTRADA DE TARJETA ---- */
+.tarjeta {
+  animation: entradaTarjeta 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes entradaTarjeta {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 380px) {
+  .contador-unidad {
+    min-width: 44px;
+    padding: 5px 7px;
+  }
+  .contador-unidad span { font-size: 1.3rem; }
+  #carta { font-size: 0.88rem; }
+}

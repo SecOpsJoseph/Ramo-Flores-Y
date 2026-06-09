@@ -8,6 +8,9 @@
 </head>
 <body>
 
+  <!-- Estrellas de fondo -->
+  <div id="estrellas"></div>
+
   <div class="tarjeta">
 
     <!-- Árbol con flores -->
@@ -25,12 +28,27 @@
 
     <!-- Contador de tiempo -->
     <div class="contador-wrapper">
-      <p class="contador-label">Mi amor por ti comenzó hace...</p>
+      <p class="contador-label">Mi amor por ti comenzó hace…</p>
       <div class="contador" id="contador">
-        <span id="dias">0</span> días
-        <span id="horas">0</span> horas
-        <span id="minutos">0</span> minutos
-        <span id="segundos">0</span> segundos
+        <div class="contador-unidad">
+          <span id="dias">0</span>
+          <small>días</small>
+        </div>
+        <div class="contador-sep">:</div>
+        <div class="contador-unidad">
+          <span id="horas">00</span>
+          <small>horas</small>
+        </div>
+        <div class="contador-sep">:</div>
+        <div class="contador-unidad">
+          <span id="minutos">00</span>
+          <small>min</small>
+        </div>
+        <div class="contador-sep">:</div>
+        <div class="contador-unidad">
+          <span id="segundos">00</span>
+          <small>seg</small>
+        </div>
       </div>
     </div>
 
