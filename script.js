@@ -235,6 +235,9 @@ function dibujarRamo() {
 }
 
 window.addEventListener("resize", resizeCanvas);
+window.addEventListener("orientationchange", () => {
+  setTimeout(resizeCanvas, 100);
+});
 resizeCanvas();
 
 // ============================================================
