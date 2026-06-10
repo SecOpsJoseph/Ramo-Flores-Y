@@ -250,11 +250,11 @@ function crearFlorVolando() {
   flor.textContent = EMOJIS_FLOR[Math.floor(Math.random() * EMOJIS_FLOR.length)];
 
   // Flores solo en la mitad derecha (donde está el ramo), no sobre el texto
-  const posX     = 45 + Math.random() * 50;
-  const duracion = 3.5 + Math.random() * 4;
-  const delay    = Math.random() * 1.5;
-  const top      = 3 + Math.random() * 55;
-  const size     = 0.85 + Math.random() * 0.9;
+  const posX     = 20 + Math.random() * 60;
+  const duracion = 3.5 + Math.random() * 3.5;
+  const delay    = Math.random() * 1.2;
+  const top      = -10 + Math.random() * 16;
+  const size     = 0.9 + Math.random() * 1.1;
 
   flor.style.cssText = `
     left: ${posX}%;
@@ -262,6 +262,7 @@ function crearFlorVolando() {
     font-size: ${size}rem;
     animation-duration: ${duracion}s;
     animation-delay: ${delay}s;
+    animation-timing-function: ease-in;
   `;
 
   contenedorFlores.appendChild(flor);
