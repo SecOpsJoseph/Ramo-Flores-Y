@@ -9,11 +9,11 @@
    ========================================== */
 
 // ============================================================
-// 1. CONFIGURACIÓN — CAMBIA ESTOS DATOS 🌻
+// 1. CONFIGURACIÓN — 🌻
 // ============================================================
 
 // ► Fecha desde que comenzó tu amor (año, mes-1, día, hora, minuto, segundo)
-const FECHA_INICIO = new Date(2026, 4, 5, 7, 58, 0);
+const FECHA_INICIO = new Date(2026, 3, 30, 7, 58, 0);
 
 // ► Texto que aparece letra a letra (usa \n para nueva línea)
 const TEXTO_AMOR =
@@ -50,7 +50,7 @@ const VELOCIDAD_TYPER = 55;
 })();
 
 // ============================================================
-// 2. ÁRBOL EN CANVAS
+// 2. RAMO EN CANVAS
 // ============================================================
 
 const canvas = document.getElementById("arbolCanvas");
@@ -62,127 +62,165 @@ function resizeCanvas() {
   canvas.height = cont.offsetHeight * 2;
   canvas.style.width  = cont.offsetWidth  + "px";
   canvas.style.height = cont.offsetHeight + "px";
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.scale(2, 2);
-  dibujarArbol();
+  dibujarRamo();
 }
 
-// Ramas recursivas
-function dibujarRama(x, y, angulo, largo, profundidad, grosor) {
-  if (profundidad === 0 || largo < 4) return;
-
+function dibujarTallo(x, y, largo, angulo) {
   const x2 = x + Math.cos(angulo) * largo;
   const y2 = y - Math.sin(angulo) * largo;
 
-  // Gradiente en las ramas más finas
   const grad = ctx.createLinearGradient(x, y, x2, y2);
-  if (profundidad > 2) {
-    grad.addColorStop(0, "#7A4F2E");
-    grad.addColorStop(1, "#9E6B42");
-  } else {
-    grad.addColorStop(0, "#9E6B42");
-    grad.addColorStop(1, "#B8885A");
-  }
+  grad.addColorStop(0, "#3E612A");
+  grad.addColorStop(1, "#1D4418");
 
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.lineTo(x2, y2);
-  ctx.lineWidth   = grosor;
+  ctx.lineWidth = 3.7;
   ctx.strokeStyle = grad;
-  ctx.lineCap     = "round";
+  ctx.lineCap = "round";
   ctx.stroke();
 
-  if (profundidad <= 2) {
-    dibujarGirasol(x2, y2, 7 + Math.random() * 5);
-  } else {
-    const spread = 0.35 + Math.random() * 0.15;
-    dibujarRama(x2, y2, angulo + spread, largo * 0.68, profundidad - 1, grosor * 0.62);
-    dibujarRama(x2, y2, angulo - spread, largo * 0.68, profundidad - 1, grosor * 0.62);
-    if (Math.random() > 0.45) {
-      dibujarRama(x2, y2, angulo + (Math.random() - 0.5) * 0.5, largo * 0.55, profundidad - 1, grosor * 0.5);
-    }
+  if (Math.random() > 0.6) {
+    dibujarHoja((x + x2) / 2, (y + y2) / 2, angulo - Math.PI / 2, 0.95);
+  }
+  if (Math.random() > 0.7) {
+    dibujarHoja((x + x2) / 2 + Math.cos(angulo) * 10, (y + y2) / 2 - Math.sin(angulo) * 10, angulo + Math.PI / 2, 0.85);
   }
 }
 
-function dibujarGirasol(x, y, radio) {
+function dibujarHoja(cx, cy, angulo, escala) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(angulo);
+  ctx.scale(escala, escala);
+
+  const gradHoja = ctx.createLinearGradient(0, -2, 16, 10);
+  gradHoja.addColorStop(0, "#4C7740");
+  gradHoja.addColorStop(1, "#7AB768");
+
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.quadraticCurveTo(18, -8, 26, 2);
+  ctx.quadraticCurveTo(16, 10, 0, 0);
+  ctx.fillStyle = gradHoja;
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function dibujarFlorBouquet(cx, cy, radio) {
   const petalos = 12;
+  ctx.shadowColor = "rgba(255,220,110,0.28)";
+  ctx.shadowBlur = 10;
 
-  // Sombra suave del girasol
-  ctx.shadowColor   = "rgba(255,200,0,0.35)";
-  ctx.shadowBlur    = 8;
-
-  // Pétalos
   for (let i = 0; i < petalos; i++) {
     const ang = (i / petalos) * Math.PI * 2;
-    const px  = x + Math.cos(ang) * radio * 1.55;
-    const py  = y + Math.sin(ang) * radio * 1.55;
+    const px = cx + Math.cos(ang) * radio * 1.45;
+    const py = cy + Math.sin(ang) * radio * 1.35;
     ctx.beginPath();
-    ctx.ellipse(px, py, radio * 0.72, radio * 0.34, ang, 0, Math.PI * 2);
-    const colorPetalo = Math.random() > 0.3 ? "#FFD700" : "#FFC107";
-    ctx.fillStyle = colorPetalo;
+    ctx.ellipse(px, py, radio * 0.78, radio * 0.34, ang, 0, Math.PI * 2);
+    ctx.fillStyle = i % 2 === 0 ? "#FFD64A" : "#FFCB33";
     ctx.fill();
   }
 
   ctx.shadowBlur = 0;
 
-  // Centro oscuro con gradiente
-  const gCentro = ctx.createRadialGradient(x - radio*0.15, y - radio*0.15, 0, x, y, radio * 0.7);
-  gCentro.addColorStop(0, "#5A2800");
-  gCentro.addColorStop(1, "#2B0F00");
+  const centro = ctx.createRadialGradient(cx, cy, radio * 0.2, cx, cy, radio * 0.7);
+  centro.addColorStop(0, "#FFF6B0");
+  centro.addColorStop(1, "#C16E18");
   ctx.beginPath();
-  ctx.arc(x, y, radio * 0.65, 0, Math.PI * 2);
-  ctx.fillStyle = gCentro;
+  ctx.arc(cx, cy, radio * 0.72, 0, Math.PI * 2);
+  ctx.fillStyle = centro;
   ctx.fill();
 
-  // Brillo
   ctx.beginPath();
-  ctx.arc(x - radio * 0.22, y - radio * 0.22, radio * 0.16, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(255,230,80,0.55)";
+  ctx.arc(cx - radio * 0.18, cy - radio * 0.16, radio * 0.16, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(255,255,255,0.5)";
   ctx.fill();
 }
 
-function dibujarArbol() {
+function dibujarRamo() {
   const w = canvas.offsetWidth;
   const h = canvas.offsetHeight;
-
   ctx.clearRect(0, 0, w * 2, h * 2);
 
-  const baseX = w * 0.48;
-  const baseY = h * 0.99;
+  const baseX = w * 0.5;
+  const baseY = h * 0.92;
+  const alturaRamo = h * 0.45;
 
-  // Tronco con gradiente
-  const gTronco = ctx.createLinearGradient(baseX - 6, baseY, baseX + 6, baseY - h * 0.28);
-  gTronco.addColorStop(0, "#6B3F1F");
-  gTronco.addColorStop(1, "#9E6B42");
+  const tallos = [];
+  for (let i = 0; i < 10; i++) {
+    tallos.push({
+      x: baseX + (i - 4.5) * 8,
+      y: baseY,
+      ang: Math.PI / 2 + (Math.random() - 0.5) * 0.24,
+      lon: alturaRamo * (0.86 + Math.random() * 0.14),
+    });
+  }
 
+  tallos.forEach((tallo) => dibujarTallo(tallo.x, tallo.y, tallo.lon, tallo.ang));
+
+  const flores = 7;
+  for (let i = 0; i < flores; i++) {
+    const offsetX = (i - (flores - 1) / 2) * 24 + Math.random() * 18;
+    const offsetY = -alturaRamo + Math.random() * 42;
+    dibujarFlorBouquet(baseX + offsetX, baseY + offsetY, 18 + Math.random() * 10);
+  }
+
+  const papel = [
+    {x: baseX - 62, y: baseY + 10},
+    {x: baseX + 62, y: baseY + 10},
+    {x: baseX + 26, y: baseY - 36},
+    {x: baseX - 26, y: baseY - 44},
+  ];
   ctx.beginPath();
-  ctx.moveTo(baseX, baseY);
-  ctx.lineTo(baseX, baseY - h * 0.28);
-  ctx.lineWidth   = 12;
-  ctx.strokeStyle = gTronco;
-  ctx.lineCap     = "round";
+  ctx.moveTo(papel[0].x, papel[0].y);
+  ctx.lineTo(papel[1].x, papel[1].y);
+  ctx.lineTo(papel[2].x, papel[2].y);
+  ctx.lineTo(papel[3].x, papel[3].y);
+  ctx.closePath();
+
+  const gradPapel = ctx.createLinearGradient(baseX, baseY + 18, baseX, baseY - 36);
+  gradPapel.addColorStop(0, "#FFF8DD");
+  gradPapel.addColorStop(1, "#F4CA61");
+  ctx.fillStyle = gradPapel;
+  ctx.fill();
+  ctx.strokeStyle = "#E1AE32";
+  ctx.lineWidth = 2;
   ctx.stroke();
 
-  const alturaTronco = baseY - h * 0.28;
-  const largoRama    = h * 0.20;
+  ctx.beginPath();
+  ctx.moveTo(baseX - 36, baseY - 24);
+  ctx.lineTo(baseX, baseY - 58);
+  ctx.lineTo(baseX + 36, baseY - 24);
+  ctx.closePath();
+  ctx.fillStyle = "#FFE7A6";
+  ctx.fill();
+  ctx.stroke();
 
-  // Grupo izquierdo
-  for (let i = 0; i < 3; i++) {
-    const ang = (Math.PI / 2) + 0.42 + i * 0.22;
-    dibujarRama(baseX, alturaTronco, ang, largoRama * (0.85 + i * 0.06), 4, 5.5);
-  }
-  // Grupo derecho
-  for (let i = 0; i < 3; i++) {
-    const ang = (Math.PI / 2) - 0.42 - i * 0.22;
-    dibujarRama(baseX, alturaTronco, ang, largoRama * (0.85 + i * 0.06), 4, 5.5);
-  }
-  // Rama central
-  dibujarRama(baseX, alturaTronco, Math.PI / 2, largoRama * 0.88, 4, 5);
+  ctx.beginPath();
+  ctx.arc(baseX - 10, baseY - 26, 12, 0, Math.PI * 2);
+  ctx.arc(baseX + 22, baseY - 16, 12, 0, Math.PI * 2);
+  ctx.fillStyle = "#D75A3B";
+  ctx.fill();
+  ctx.fillStyle = "#F6B436";
+  ctx.beginPath();
+  ctx.arc(baseX - 10, baseY - 26, 6, 0, Math.PI * 2);
+  ctx.arc(baseX + 22, baseY - 16, 6, 0, Math.PI * 2);
+  ctx.fill();
 
-  // Girasoles sueltos cayendo
-  for (let i = 0; i < 6; i++) {
-    const fx = baseX - 28 + Math.random() * 75;
-    const fy = alturaTronco + 35 + Math.random() * 110;
-    dibujarGirasol(fx, fy, 4.5 + Math.random() * 3.5);
+  for (let i = 0; i < 4; i++) {
+    ctx.beginPath();
+    const x = baseX + (i - 1.5) * 18;
+    const y = baseY + 8 + Math.sin(i * 0.8) * 5;
+    ctx.moveTo(x, y);
+    ctx.lineTo(x + 12, y + 6);
+    ctx.strokeStyle = "#D75A3B";
+    ctx.lineWidth = 3;
+    ctx.stroke();
   }
 }
 
