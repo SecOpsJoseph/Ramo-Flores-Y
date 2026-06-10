@@ -148,20 +148,30 @@ function dibujarRamo() {
   ctx.clearRect(0, 0, w * 2, h * 2);
 
   const baseX = w * 0.5;
-  const baseY = h * 0.92;
-  const alturaRamo = h * 0.45;
+  const baseY = h * 0.45;
+  const alturaRamo = h * 0.32;
 
   const tallos = [];
   for (let i = 0; i < 10; i++) {
     tallos.push({
       x: baseX + (i - 4.5) * 8,
       y: baseY,
-      ang: Math.PI / 2 + (Math.random() - 0.5) * 0.24,
-      lon: alturaRamo * (0.86 + Math.random() * 0.14),
+      ang: Math.PI / 2 + (Math.random() - 0.5) * 0.18,
+      lon: alturaRamo * (0.88 + Math.random() * 0.12),
     });
   }
 
   tallos.forEach((tallo) => dibujarTallo(tallo.x, tallo.y, tallo.lon, tallo.ang));
+
+  // Cintas decorativas visibles alrededor del tallo
+  for (let j = 0; j < 6; j++) {
+    const wrapY = baseY + 6 + j * 10;
+    ctx.beginPath();
+    ctx.ellipse(baseX, wrapY, 36 - j * 3, 6, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = j % 2 === 0 ? "rgba(215, 90, 59, 0.45)" : "rgba(232, 113, 79, 0.32)";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
 
   const flores = 7;
   for (let i = 0; i < flores; i++) {
