@@ -13,7 +13,7 @@
 // ============================================================
 
 // ► Fecha desde que comenzó tu amor (año, mes-1, día, hora, minuto, segundo)
-const FECHA_INICIO = new Date(2026, 3, 30, 7, 58, 0);
+const FECHA_INICIO = new Date(2026, 3, 30, 18, 4, 0);
 
 // ► Texto que aparece letra a letra (usa \n para nueva línea)
 const TEXTO_AMOR =
