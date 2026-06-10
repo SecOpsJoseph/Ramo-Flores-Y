@@ -228,7 +228,7 @@ window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
 // ============================================================
-// 3. FLORES CAYENDO (DOM animado)
+// 3. FLORES CAYENDO (DOM animado) — solo en zona derecha (ramo)
 // ============================================================
 
 const contenedorFlores = document.getElementById("flores-volando");
@@ -239,10 +239,11 @@ function crearFlorVolando() {
   flor.classList.add("Flores_Amarillas");
   flor.textContent = EMOJIS_FLOR[Math.floor(Math.random() * EMOJIS_FLOR.length)];
 
-  const posX     = 10 + Math.random() * 75;
+  // Flores solo en la mitad derecha (donde está el ramo), no sobre el texto
+  const posX     = 45 + Math.random() * 50;
   const duracion = 3.5 + Math.random() * 4;
   const delay    = Math.random() * 1.5;
-  const top      = 3 + Math.random() * 45;
+  const top      = 3 + Math.random() * 55;
   const size     = 0.85 + Math.random() * 0.9;
 
   flor.style.cssText = `
