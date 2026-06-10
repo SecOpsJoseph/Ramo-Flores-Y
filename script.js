@@ -1,19 +1,28 @@
 /* ==========================================
    FLORES AMARILLAS - script.js  ✨ Glow Up
+   ==========================================
+   - Estrellas de fondo generadas dinámicamente
+   - Árbol con flores amarillas en canvas (mejorado)
+   - Efecto typewriter elegante
+   - Flores cayendo con drift lateral
+   - Contador en cajas individuales
    ========================================== */
 
 // ============================================================
 // 1. CONFIGURACIÓN — 🌻
 // ============================================================
 
+// ► Fecha desde que comenzó tu amor (año, mes-1, día, hora, minuto, segundo)
 const FECHA_INICIO = new Date(2026, 3, 30, 18, 4, 0);
 
+// ► Texto que aparece letra a letra (usa \n para nueva línea)
 const TEXTO_AMOR =
   "Flores Amarillas para mi vida:\n\n" +
   "Si pudiera elegir un lugar\nseguro, sería a tu lado.\n\n" +
   "Cuanto más tiempo estoy\ncontigo más te amo.\n\n" +
   "— I Love You! ";
 
+// ► Velocidad del typewriter en ms por carácter
 const VELOCIDAD_TYPER = 55;
 
 // ============================================================
@@ -22,14 +31,19 @@ const VELOCIDAD_TYPER = 55;
 
 (function generarEstrellas() {
   const cont = document.getElementById("estrellas");
-  for (let i = 0; i < 90; i++) {
+  const total = 90;
+  for (let i = 0; i < total; i++) {
     const s = document.createElement("span");
     const size = 1 + Math.random() * 2.2;
     s.style.cssText = `
-      width:${size}px; height:${size}px;
-      top:${Math.random()*100}%; left:${Math.random()*100}%;
-      --dur:${2+Math.random()*4}s; --del:${Math.random()*5}s;
-      --opmin:${0.05+Math.random()*0.15}; --opmax:${0.5+Math.random()*0.5};
+      width:  ${size}px;
+      height: ${size}px;
+      top:    ${Math.random() * 100}%;
+      left:   ${Math.random() * 100}%;
+      --dur:  ${2 + Math.random() * 4}s;
+      --del:  ${Math.random() * 5}s;
+      --opmin: ${0.05 + Math.random() * 0.15};
+      --opmax: ${0.5  + Math.random() * 0.5};
     `;
     cont.appendChild(s);
   }
@@ -56,9 +70,11 @@ function resizeCanvas() {
 function dibujarTallo(x, y, largo, angulo) {
   const x2 = x + Math.cos(angulo) * largo;
   const y2 = y - Math.sin(angulo) * largo;
+
   const grad = ctx.createLinearGradient(x, y, x2, y2);
   grad.addColorStop(0, "#3E612A");
   grad.addColorStop(1, "#1D4418");
+
   ctx.beginPath();
   ctx.moveTo(x, y);
   ctx.lineTo(x2, y2);
@@ -66,10 +82,13 @@ function dibujarTallo(x, y, largo, angulo) {
   ctx.strokeStyle = grad;
   ctx.lineCap = "round";
   ctx.stroke();
-  if (Math.random() > 0.6)
-    dibujarHoja((x+x2)/2, (y+y2)/2, angulo - Math.PI/2, 0.95);
-  if (Math.random() > 0.7)
-    dibujarHoja((x+x2)/2 + Math.cos(angulo)*10, (y+y2)/2 - Math.sin(angulo)*10, angulo + Math.PI/2, 0.85);
+
+  if (Math.random() > 0.6) {
+    dibujarHoja((x + x2) / 2, (y + y2) / 2, angulo - Math.PI / 2, 0.95);
+  }
+  if (Math.random() > 0.7) {
+    dibujarHoja((x + x2) / 2 + Math.cos(angulo) * 10, (y + y2) / 2 - Math.sin(angulo) * 10, angulo + Math.PI / 2, 0.85);
+  }
 }
 
 function dibujarHoja(cx, cy, angulo, escala) {
@@ -77,15 +96,18 @@ function dibujarHoja(cx, cy, angulo, escala) {
   ctx.translate(cx, cy);
   ctx.rotate(angulo);
   ctx.scale(escala, escala);
-  const g = ctx.createLinearGradient(0, -2, 16, 10);
-  g.addColorStop(0, "#4C7740");
-  g.addColorStop(1, "#7AB768");
+
+  const gradHoja = ctx.createLinearGradient(0, -2, 16, 10);
+  gradHoja.addColorStop(0, "#4C7740");
+  gradHoja.addColorStop(1, "#7AB768");
+
   ctx.beginPath();
   ctx.moveTo(0, 0);
   ctx.quadraticCurveTo(18, -8, 26, 2);
   ctx.quadraticCurveTo(16, 10, 0, 0);
-  ctx.fillStyle = g;
+  ctx.fillStyle = gradHoja;
   ctx.fill();
+
   ctx.restore();
 }
 
@@ -93,25 +115,29 @@ function dibujarFlorBouquet(cx, cy, radio) {
   const petalos = 12;
   ctx.shadowColor = "rgba(255,220,110,0.28)";
   ctx.shadowBlur = 10;
+
   for (let i = 0; i < petalos; i++) {
     const ang = (i / petalos) * Math.PI * 2;
     const px = cx + Math.cos(ang) * radio * 1.45;
     const py = cy + Math.sin(ang) * radio * 1.35;
     ctx.beginPath();
-    ctx.ellipse(px, py, radio*0.78, radio*0.34, ang, 0, Math.PI*2);
+    ctx.ellipse(px, py, radio * 0.78, radio * 0.34, ang, 0, Math.PI * 2);
     ctx.fillStyle = i % 2 === 0 ? "#FFD64A" : "#FFCB33";
     ctx.fill();
   }
+
   ctx.shadowBlur = 0;
-  const centro = ctx.createRadialGradient(cx, cy, radio*0.2, cx, cy, radio*0.7);
+
+  const centro = ctx.createRadialGradient(cx, cy, radio * 0.2, cx, cy, radio * 0.7);
   centro.addColorStop(0, "#FFF6B0");
   centro.addColorStop(1, "#C16E18");
   ctx.beginPath();
-  ctx.arc(cx, cy, radio*0.72, 0, Math.PI*2);
+  ctx.arc(cx, cy, radio * 0.72, 0, Math.PI * 2);
   ctx.fillStyle = centro;
   ctx.fill();
+
   ctx.beginPath();
-  ctx.arc(cx - radio*0.18, cy - radio*0.16, radio*0.16, 0, Math.PI*2);
+  ctx.arc(cx - radio * 0.18, cy - radio * 0.16, radio * 0.16, 0, Math.PI * 2);
   ctx.fillStyle = "rgba(255,255,255,0.5)";
   ctx.fill();
 }
@@ -119,36 +145,36 @@ function dibujarFlorBouquet(cx, cy, radio) {
 function dibujarRamo() {
   const w = canvas.offsetWidth;
   const h = canvas.offsetHeight;
-  ctx.clearRect(0, 0, w*2, h*2);
+  ctx.clearRect(0, 0, w * 2, h * 2);
 
   const baseX = w * 0.5;
-  const baseY = h * 0.25;
-  const alturaRamo = h * 0.52;
+  const baseY = h * 0.92;
+  const alturaRamo = h * 0.45;
 
   const tallos = [];
   for (let i = 0; i < 10; i++) {
     tallos.push({
       x: baseX + (i - 4.5) * 8,
       y: baseY,
-      ang: Math.PI/2 + (Math.random()-0.5) * 0.24,
+      ang: Math.PI / 2 + (Math.random() - 0.5) * 0.24,
       lon: alturaRamo * (0.86 + Math.random() * 0.14),
     });
   }
-  tallos.forEach(t => dibujarTallo(t.x, t.y, t.lon, t.ang));
+
+  tallos.forEach((tallo) => dibujarTallo(tallo.x, tallo.y, tallo.lon, tallo.ang));
 
   const flores = 7;
   for (let i = 0; i < flores; i++) {
-    const offsetX = (i - (flores-1)/2) * 24 + Math.random()*18;
-    const offsetY = -alturaRamo + Math.random()*42;
-    dibujarFlorBouquet(baseX + offsetX, baseY + offsetY, 18 + Math.random()*10);
+    const offsetX = (i - (flores - 1) / 2) * 24 + Math.random() * 18;
+    const offsetY = -alturaRamo + Math.random() * 42;
+    dibujarFlorBouquet(baseX + offsetX, baseY + offsetY, 18 + Math.random() * 10);
   }
 
-  // Papel envolvente
   const papel = [
-    {x: baseX-62, y: baseY+10},
-    {x: baseX+62, y: baseY+10},
-    {x: baseX+26, y: baseY-36},
-    {x: baseX-26, y: baseY-44},
+    {x: baseX - 62, y: baseY + 10},
+    {x: baseX + 62, y: baseY + 10},
+    {x: baseX + 26, y: baseY - 36},
+    {x: baseX - 26, y: baseY - 44},
   ];
   ctx.beginPath();
   ctx.moveTo(papel[0].x, papel[0].y);
@@ -156,7 +182,8 @@ function dibujarRamo() {
   ctx.lineTo(papel[2].x, papel[2].y);
   ctx.lineTo(papel[3].x, papel[3].y);
   ctx.closePath();
-  const gradPapel = ctx.createLinearGradient(baseX, baseY+18, baseX, baseY-36);
+
+  const gradPapel = ctx.createLinearGradient(baseX, baseY + 18, baseX, baseY - 36);
   gradPapel.addColorStop(0, "#FFF8DD");
   gradPapel.addColorStop(1, "#F4CA61");
   ctx.fillStyle = gradPapel;
@@ -166,44 +193,33 @@ function dibujarRamo() {
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.moveTo(baseX-36, baseY-24);
-  ctx.lineTo(baseX,    baseY-58);
-  ctx.lineTo(baseX+36, baseY-24);
+  ctx.moveTo(baseX - 36, baseY - 24);
+  ctx.lineTo(baseX, baseY - 58);
+  ctx.lineTo(baseX + 36, baseY - 24);
   ctx.closePath();
   ctx.fillStyle = "#FFE7A6";
   ctx.fill();
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.arc(baseX-10, baseY-26, 12, 0, Math.PI*2);
-  ctx.arc(baseX+22, baseY-16, 12, 0, Math.PI*2);
+  ctx.arc(baseX - 10, baseY - 26, 12, 0, Math.PI * 2);
+  ctx.arc(baseX + 22, baseY - 16, 12, 0, Math.PI * 2);
   ctx.fillStyle = "#D75A3B";
   ctx.fill();
   ctx.fillStyle = "#F6B436";
   ctx.beginPath();
-  ctx.arc(baseX-10, baseY-26, 6, 0, Math.PI*2);
-  ctx.arc(baseX+22, baseY-16, 6, 0, Math.PI*2);
+  ctx.arc(baseX - 10, baseY - 26, 6, 0, Math.PI * 2);
+  ctx.arc(baseX + 22, baseY - 16, 6, 0, Math.PI * 2);
   ctx.fill();
 
-  // Envoltura de cinta decorativa alrededor del tallo
-  for (let j = 0; j < 8; j++) {
-    const wrapY = baseY + 6 + j * 14;
+  for (let i = 0; i < 4; i++) {
     ctx.beginPath();
-    ctx.ellipse(baseX, wrapY, 38 + j*1.5, 7, 0, 0, Math.PI*2);
-    ctx.strokeStyle = j % 2 === 0 ? "rgba(215, 90, 59, 0.5)" : "rgba(232, 113, 79, 0.4)";
-    ctx.lineWidth = 2.8;
-    ctx.stroke();
-  }
-
-  // Lazo decorativo (moño) principal
-  for (let i = 0; i < 5; i++) {
-    ctx.beginPath();
-    const x = baseX + (i-2)*14;
-    const y = baseY + 14 + Math.sin(i*0.6)*7;
+    const x = baseX + (i - 1.5) * 18;
+    const y = baseY + 8 + Math.sin(i * 0.8) * 5;
     ctx.moveTo(x, y);
-    ctx.lineTo(x+11, y+8);
-    ctx.strokeStyle = i % 2 === 0 ? "#D75A3B" : "#E8714F";
-    ctx.lineWidth = 4;
+    ctx.lineTo(x + 12, y + 6);
+    ctx.strokeStyle = "#D75A3B";
+    ctx.lineWidth = 3;
     ctx.stroke();
   }
 }
@@ -212,7 +228,7 @@ window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
 // ============================================================
-// 3. FLORES CAYENDO — posición relativa dentro del contenedor
+// 3. FLORES CAYENDO (DOM animado) — solo en zona derecha (ramo)
 // ============================================================
 
 const contenedorFlores = document.getElementById("flores-volando");
@@ -223,27 +239,29 @@ function crearFlorVolando() {
   flor.classList.add("Flores_Amarillas");
   flor.textContent = EMOJIS_FLOR[Math.floor(Math.random() * EMOJIS_FLOR.length)];
 
-  // posición dentro del contenedor (que ya está limitado a la zona del ramo)
-  const posX     = Math.random() * 85;
-  const posY     = Math.random() * 60;
-  const duracion = 3.5 + Math.random() * 3;
-  const delay    = Math.random() * 1.2;
-  const size     = 0.8 + Math.random() * 0.8;
+  // Flores solo en la mitad derecha (donde está el ramo), no sobre el texto
+  const posX     = 45 + Math.random() * 50;
+  const duracion = 3.5 + Math.random() * 4;
+  const delay    = Math.random() * 1.5;
+  const top      = 3 + Math.random() * 55;
+  const size     = 0.85 + Math.random() * 0.9;
 
   flor.style.cssText = `
     left: ${posX}%;
-    top: ${posY}%;
+    top: ${top}%;
     font-size: ${size}rem;
     animation-duration: ${duracion}s;
     animation-delay: ${delay}s;
   `;
 
   contenedorFlores.appendChild(flor);
-  setTimeout(() => flor.remove(), (duracion + delay + 1) * 1000);
+  setTimeout(() => flor.remove(), (duracion + delay + 1.2) * 1000);
 }
 
-setInterval(crearFlorVolando, 900);
-for (let i = 0; i < 4; i++) setTimeout(crearFlorVolando, i * 300);
+setInterval(crearFlorVolando, 750);
+for (let i = 0; i < 5; i++) {
+  setTimeout(crearFlorVolando, i * 280);
+}
 
 // ============================================================
 // 4. EFECTO TYPEWRITER
