@@ -65,7 +65,7 @@ body {
   min-height: 600px;
   height: auto;
   overflow: hidden;
-  padding: 20px 16px 90px;
+  padding: 20px 16px 70px;
 
   /* Borde luminoso dorado */
   border: 1.5px solid rgba(245, 200, 66, 0.5);
@@ -93,7 +93,7 @@ body {
   position: relative;
   width: 90%;
   max-width: 420px;
-  height: 280px;
+  height: 240px;
   margin: 0 auto 12px;
   pointer-events: none;
   z-index: 1;
@@ -108,23 +108,24 @@ body {
 /* ---- TEXTO DE AMOR ---- */
 .texto-amor {
   position: relative;
-  z-index: 2;
+  z-index: 4;
   width: 90%;
   max-width: 400px;
-  margin: 0 auto 12px;
+  margin: 6px auto 12px;
   text-align: center;
   padding: 8px 0 12px;
 }
 
 #carta {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 400;
   color: var(--texto);
-  line-height: 1.7;
+  line-height: 1.85;
   white-space: pre-wrap;
   letter-spacing: 0.01em;
   display: inline-block;
+  max-width: 100%;
 }
 
 /* Cursor parpadeante estilizado */
@@ -133,7 +134,7 @@ body {
   animation: blink 0.9s step-start infinite;
   color: var(--oro-oscuro);
   font-weight: 300;
-  margin-left: 1px;
+  margin-left: 6px;
 }
 
 @keyframes blink {

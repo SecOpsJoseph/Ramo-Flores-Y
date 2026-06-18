@@ -13,7 +13,7 @@
 // ============================================================
 
 // ► Fecha desde que comenzó tu amor (año, mes-1, día, hora, minuto, segundo)
-const FECHA_INICIO = new Date(2026, 3, 30, 18, 4, 0);
+const FECHA_INICIO = new Date(2026, 3, 25, 20, 3, 0);
 
 // ► Texto que aparece letra a letra (usa \n para nueva línea)
 const TEXTO_AMOR =
@@ -82,12 +82,15 @@ function dibujarTallo(x, y, largo, angulo) {
   ctx.strokeStyle = grad;
   ctx.lineCap = "round";
   ctx.stroke();
-
-  if (Math.random() > 0.6) {
-    dibujarHoja((x + x2) / 2, (y + y2) / 2, angulo - Math.PI / 2, 0.95);
-  }
-  if (Math.random() > 0.7) {
-    dibujarHoja((x + x2) / 2 + Math.cos(angulo) * 10, (y + y2) / 2 - Math.sin(angulo) * 10, angulo + Math.PI / 2, 0.85);
+  // Por defecto dibuja hojas aleatorias; puede desactivarse pasando
+  // el argumento `mostrarHojas = false` al llamar a esta función.
+  if (typeof arguments[4] === 'undefined' || arguments[4]) {
+    if (Math.random() > 0.6) {
+      dibujarHoja((x + x2) / 2, (y + y2) / 2, angulo - Math.PI / 2, 0.95);
+    }
+    if (Math.random() > 0.7) {
+      dibujarHoja((x + x2) / 2 + Math.cos(angulo) * 10, (y + y2) / 2 - Math.sin(angulo) * 10, angulo + Math.PI / 2, 0.85);
+    }
   }
 }
 
@@ -146,92 +149,40 @@ function dibujarRamo() {
   const w = canvas.offsetWidth;
   const h = canvas.offsetHeight;
   ctx.clearRect(0, 0, w * 2, h * 2);
-
+  // Base del grupo de tallos (sin envoltura ni cintas)
   const baseX = w * 0.5;
-  const baseY = h * 0.45;
-  const alturaRamo = h * 0.32;
+  const baseY = h * 0.72;
+  const alturaRamo = h * 0.46;
 
+  const cantidad = 9;
   const tallos = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < cantidad; i++) {
     tallos.push({
-      x: baseX + (i - 4.5) * 8,
+      x: baseX + (i - (cantidad - 1) / 2) * 18,
       y: baseY,
-      ang: Math.PI / 2 + (Math.random() - 0.5) * 0.18,
-      lon: alturaRamo * (0.88 + Math.random() * 0.12),
+      ang: Math.PI / 2 + (Math.random() - 0.5) * 0.22,
+      lon: alturaRamo * (0.88 + Math.random() * 0.14),
     });
   }
 
-  tallos.forEach((tallo) => dibujarTallo(tallo.x, tallo.y, tallo.lon, tallo.ang));
+  // Dibujar tallos y varias florecitas pequeñas alrededor de la punta
+  tallos.forEach((tallo) => {
+    dibujarTallo(tallo.x, tallo.y, tallo.lon, tallo.ang, false); // sin hojas
+    const tipX = tallo.x + Math.cos(tallo.ang) * tallo.lon;
+    const tipY = tallo.y - Math.sin(tallo.ang) * tallo.lon;
+    // Flor principal en la punta
+    dibujarFlorBouquet(tipX, tipY, 12 + Math.random() * 6);
 
-  // Cintas decorativas visibles alrededor del tallo
-  for (let j = 0; j < 6; j++) {
-    const wrapY = baseY + 6 + j * 10;
-    ctx.beginPath();
-    ctx.ellipse(baseX, wrapY, 36 - j * 3, 6, 0, 0, Math.PI * 2);
-    ctx.strokeStyle = j % 2 === 0 ? "rgba(215, 90, 59, 0.45)" : "rgba(232, 113, 79, 0.32)";
-    ctx.lineWidth = 3;
-    ctx.stroke();
-  }
-
-  const flores = 7;
-  for (let i = 0; i < flores; i++) {
-    const offsetX = (i - (flores - 1) / 2) * 24 + Math.random() * 18;
-    const offsetY = -alturaRamo + Math.random() * 42;
-    dibujarFlorBouquet(baseX + offsetX, baseY + offsetY, 18 + Math.random() * 10);
-  }
-
-  const papel = [
-    {x: baseX - 62, y: baseY + 10},
-    {x: baseX + 62, y: baseY + 10},
-    {x: baseX + 26, y: baseY - 36},
-    {x: baseX - 26, y: baseY - 44},
-  ];
-  ctx.beginPath();
-  ctx.moveTo(papel[0].x, papel[0].y);
-  ctx.lineTo(papel[1].x, papel[1].y);
-  ctx.lineTo(papel[2].x, papel[2].y);
-  ctx.lineTo(papel[3].x, papel[3].y);
-  ctx.closePath();
-
-  const gradPapel = ctx.createLinearGradient(baseX, baseY + 18, baseX, baseY - 36);
-  gradPapel.addColorStop(0, "#FFF8DD");
-  gradPapel.addColorStop(1, "#F4CA61");
-  ctx.fillStyle = gradPapel;
-  ctx.fill();
-  ctx.strokeStyle = "#E1AE32";
-  ctx.lineWidth = 2;
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(baseX - 36, baseY - 24);
-  ctx.lineTo(baseX, baseY - 58);
-  ctx.lineTo(baseX + 36, baseY - 24);
-  ctx.closePath();
-  ctx.fillStyle = "#FFE7A6";
-  ctx.fill();
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.arc(baseX - 10, baseY - 26, 12, 0, Math.PI * 2);
-  ctx.arc(baseX + 22, baseY - 16, 12, 0, Math.PI * 2);
-  ctx.fillStyle = "#D75A3B";
-  ctx.fill();
-  ctx.fillStyle = "#F6B436";
-  ctx.beginPath();
-  ctx.arc(baseX - 10, baseY - 26, 6, 0, Math.PI * 2);
-  ctx.arc(baseX + 22, baseY - 16, 6, 0, Math.PI * 2);
-  ctx.fill();
-
-  for (let i = 0; i < 4; i++) {
-    ctx.beginPath();
-    const x = baseX + (i - 1.5) * 18;
-    const y = baseY + 8 + Math.sin(i * 0.8) * 5;
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + 12, y + 6);
-    ctx.strokeStyle = "#D75A3B";
-    ctx.lineWidth = 3;
-    ctx.stroke();
-  }
+    // Añadir 1-3 florecitas pequeñas alrededor de la punta para simular un ramo
+    const extras = 1 + Math.floor(Math.random() * 3);
+    for (let k = 0; k < extras; k++) {
+      const angOff = (Math.random() - 0.5) * Math.PI * 0.9;
+      const dist = 8 + Math.random() * 18;
+      const fx = tipX + Math.cos(tallo.ang + angOff) * dist + (Math.random() - 0.5) * 6;
+      const fy = tipY - Math.sin(tallo.ang + angOff) * dist + (Math.random() - 0.5) * 6;
+      dibujarFlorBouquet(fx, fy, 6 + Math.random() * 6);
+    }
+  });
 }
 
 window.addEventListener("resize", resizeCanvas);
