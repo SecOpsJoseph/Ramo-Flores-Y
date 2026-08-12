@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ramo de Flores Amarillas 🌼❤️</title>
+  
+  <style>
+    /* ==========================================
+       FLORES AMARILLAS - style.css  ✨ Glow Up
+       ========================================== */
+
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@700&family=Inter:wght@300;400&display=swap');
+
+    :root {
+      --oro:        #F5C842;
+      --oro-claro:  #FFE87C;
+      --oro-oscuro: #B8860B;
+      --marron:     #8B5E3C;
+      --crema:      #FDF6E3;
+      --crema-suave:#F9EFD0;
+      --texto:      #2C1A0E;
+      --texto-suave:#6B4E2A;
+      --noche:      #0D0610;
+      --violeta:    #1A0828;
+      --glow-oro:   rgba(245, 200, 66, 0.35);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ---- FONDO CON ESTRELLAS ---- */
+    body {
+      background: radial-gradient(ellipse at 30% 20%, #1e0a2e 0%, var(--noche) 60%);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      font-family: 'Cormorant Garamond', serif;
+      overflow: hidden;
+      padding-top: 20px;
+    }
+
+    #estrellas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #estrellas span {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      animation: parpadeo var(--dur, 3s) ease-in-out infinite var(--del, 0s);
+    }
+
+    @keyframes parpadeo {
+      0%, 100% { opacity: var(--opmin, 0.15); transform: scale(1); }
+      50%       { opacity: var(--opmax, 0.9);  transform: scale(1.3); }
+    }
+
+    /* ---- TARJETA PRINCIPAL ---- */
+    .tarjeta {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(160deg, var(--crema) 0%, var(--crema-suave) 100%);
+      border-radius: 28px;
+      width: 92vw;
+      max-width: 480px;
+      min-height: 600px;
+      height: auto;
+      overflow: hidden;
+      padding: 0px 16px 70px;
+
+      /* Borde luminoso dorado */
+      border: 1.5px solid rgba(245, 200, 66, 0.5);
+      box-shadow:
+        0 0 0 1px rgba(245, 200, 66, 0.12),
+        0 0 40px var(--glow-oro),
+        0 20px 80px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    /* Esquina decorativa superior izquierda */
+    .tarjeta::before {
+      content: '🌻';
+      position: absolute;
+      top: 12px;
+      left: 14px;
+      font-size: 1rem;
+      opacity: 0.6;
+      z-index: 5;
+      filter: drop-shadow(0 0 6px var(--oro));
+    }
+
+    /* ---- ÁRBOL CANVAS ---- */
+    .arbol-container {
+      position: relative;
+      width: 90%;
+      max-width: 420px;
+      height: 240px;
+      margin: 0 auto 12px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #arbolCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ---- TEXTO DE AMOR ---- */
+    .texto-amor {
+      position: relative;
+      z-index: 4;
+      width: 90%;
+      max-width: 400px;
+      margin: 6px auto 12px;
+      text-align: center;
+      padding: 8px 0 12px;
+    }
+
+    #carta {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--texto);
+      line-height: 1.85;
+      white-space: pre-wrap;
+      letter-spacing: 0.01em;
+      display: inline-block;
+      max-width: 100%;
+    }
+
+    /* Cursor parpadeante estilizado */
+    #carta::after {
+      content: '|';
+      animation: blink 0.9s step-start infinite;
+      color: var(--oro-oscuro);
+      font-weight: 300;
+      margin-left: 6px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* ---- FLORES VOLANDO ---- */
+    #flores-volando {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+      overflow: hidden;
+      clip-path: inset(0);
+    }
+
+    .Flores_Amarillas {
+      position: absolute;
+      width: auto;
+      height: auto;
+      transform: none;
+      background: none;
+      animation: caerFlor linear forwards;
+      filter: drop-shadow(0 0 4px rgba(255,200,0,0.6));
+    }
+
+    @keyframes caerFlor {
+      0% {
+        transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      30% {
+        transform: translateY(45px) translateX(10px) rotate(80deg) scale(0.98);
+        opacity: 0.95;
+      }
+      60% {
+        transform: translateY(95px) translateX(-12px) rotate(180deg) scale(0.92);
+        opacity: 0.75;
+      }
+      100% {
+        transform: translateY(165px) translateX(8px) rotate(260deg) scale(0.85);
+        opacity: 0;
+      }
+    }
+
+    /* ---- CONTADOR ---- */
+    .contador-wrapper {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 14px 22px 18px;
+      background: linear-gradient(to top, var(--crema-suave), transparent);
+      border-top: 1px solid rgba(184,134,11,0.2);
+      z-index: 4;
+    }
+
+    .contador-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--texto-suave);
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    .contador {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .contador-unidad {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.05));
+      border: 1px solid rgba(245,200,66,0.3);
+      border-radius: 10px;
+      padding: 6px 10px;
+      min-width: 52px;
+      box-shadow: 0 2px 8px rgba(184,134,11,0.1);
+    }
+
+    .contador-unidad span {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--oro-oscuro);
+      line-height: 1;
+      text-shadow: 0 0 10px rgba(245,200,66,0.4);
+    }
+
+    .contador-unidad small {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 300;
+      color: var(--texto-suave);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 3px;
+    }
+
+    .contador-sep {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: var(--oro-oscuro);
+      opacity: 0.5;
+      align-self: flex-start;
+      padding-top: 6px;
+    }
+
+    /* ---- ANIMACIÓN ENTRADA ---- */
+    @keyframes crecerArbol {
+      from { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+      to   { opacity: 1; transform: scaleY(1); transform-origin: bottom; }
+    }
+
+    /* ---- ENTRADA DE TARJETA ---- */
+    .tarjeta {
+      animation: entradaTarjeta 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes entradaTarjeta {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 480px) {
+      .tarjeta {
+        padding: 16px 12px 80px;
+        min-height: 580px;
+      }
+      
+      .arbol-container {
+        height: 220px;
+        max-width: 100%;
+        width: 95%;
+        margin: 0 auto 10px;
+      }
+      
+      #carta {
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+      
+      .contador-label {
+        font-size: 0.75rem;
+      }
+      
+      .contador-unidad {
+        min-width: 48px;
+        padding: 5px 8px;
+      }
+      
+      .contador-unidad span {
+        font-size: 1.4rem;
+      }
+      
+      .contador-unidad small {
+        font-size: 0.5rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .tarjeta {
+        padding: 14px 10px 75px;
+        min-height: 520px;
+      }
+      
+      .arbol-container {
+        height: 180px;
+        width: 95%;
+        margin: 0 auto 8px;
+      }
+      
+      #carta {
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+      
+      .contador-unidad {
+        min-width: 42px;
+        padding: 4px 6px;
+      }
+      
+      .contador-unidad span {
+        font-size: 1.2rem;
+      }
+      
+      .contador-unidad small {
+        font-size: 0.45rem;
+      }
+      
+      .contador-sep {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Estrellas de fondo -->
+  <div id="estrellas"></div>
+
+  <div class="tarjeta">
+    <!-- Ramo: canvas posicionado arriba -->
+    <div class="arbol-container">
+      <canvas id="arbolCanvas"></canvas>
+    </div>
+
+    <!-- Texto de amor (typewriter) — centrado debajo del ramo -->
+    <div class="texto-amor">
+      <p id="carta"></p>
+    </div>
+
+    <!-- Flores cayendo — solo zona del ramo (derecha) -->
+    <div id="flores-volando"></div>
+
+    <!-- Contador de tiempo -->
+    <div class="contador-wrapper">
+      <p class="contador-label">Enamorado de ti desde hace…</p>
+      <div class="contador" id="contador">
+        <div class="contador-unidad">
+          <span id="dias">0</span>
+          <small>días</small>
+        </div>
+        <div class="contador-sep">:</div>
+        <div class="contador-unidad">
+          <span id="horas">00</span>
+          <small>horas</small>
+        </div>
+        <div class="contador-sep">:</div>
+        <div class="contador-unidad">
+          <span id="minutos">00</span>
+          <small>min</small>
+        </div>
+        <div class="contador-sep">:</div>
+        <div class="contador-unidad">
+          <span id="segundos">00</span>
+          <small>seg</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================
+       FLORES AMARILLAS - script.js  ✨ Glow Up
+       ==========================================
+       - Estrellas de fondo generadas dinámicamente
+       - Árbol con flores amarillas en canvas (mejorado)
+       - Efecto typewriter elegante
+       - Flores cayendo con drift lateral
+       - Contador en cajas individuales
+       ========================================== */
+
+    // ============================================================
+    // 1. CONFIGURACIÓN — 🌻
+    // ============================================================
+
+    // ► Fecha desde que comenzó tu amor (año, mes-1, día, hora, minuto, segundo)
+    const FECHA_INICIO = new Date(2026, 3, 16, 19, 18, 0);
+
+    // ► Texto que aparece letra a letra (usa \n para nueva línea)
+    const TEXTO_AMOR =
+      "Flores Amarillas para mi vida:\n\n" +
+      "Si pudiera elegir un lugar\nseguro, sería a tu lado.\n\n" +
+      "Cuanto más tiempo estoy\ncontigo más te amo.\n\n" +
+      "— I Love You! ";
+
+    // ► Velocidad del typewriter en ms por carácter
+    const VELOCIDAD_TYPER = 55;
+
+    // ============================================================
+    // 0. ESTRELLAS DE FONDO
+    // ============================================================
+
+    (function generarEstrellas() {
+      const cont = document.getElementById("estrellas");
+      const total = 90;
+      for (let i = 0; i < total; i++) {
+        const s = document.createElement("span");
+        const size = 1 + Math.random() * 2.2;
+        s.style.cssText = `
+          width:  ${size}px;
+          height: ${size}px;
+          top:    ${Math.random() * 100}%;
+          left:   ${Math.random() * 100}%;
+          --dur:  ${2 + Math.random() * 4}s;
+          --del:  ${Math.random() * 5}s;
+          --opmin: ${0.05 + Math.random() * 0.15};
+          --opmax: ${0.5  + Math.random() * 0.5};
+        `;
+        cont.appendChild(s);
+      }
+    })();
+
+    // ============================================================
+    // 2. RAMO EN CANVAS
+    // ============================================================
+
+    const canvas = document.getElementById("arbolCanvas");
+    const ctx    = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      const cont = canvas.parentElement;
+      canvas.width  = cont.offsetWidth  * 2;
+      canvas.height = cont.offsetHeight * 2;
+      canvas.style.width  = cont.offsetWidth  + "px";
+      canvas.style.height = cont.offsetHeight + "px";
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(2, 2);
+      dibujarRamo();
+    }
+
+    function dibujarTallo(x, y, largo, angulo) {
+      const x2 = x + Math.cos(angulo) * largo;
+      const y2 = y - Math.sin(angulo) * largo;
+
+      const grad = ctx.createLinearGradient(x, y, x2, y2);
+      grad.addColorStop(0, "#3E612A");
+      grad.addColorStop(1, "#1D4418");
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x2, y2);
+      ctx.lineWidth = 3.7;
+      ctx.strokeStyle = grad;
+      ctx.lineCap = "round";
+      ctx.stroke();
+      // Por defecto dibuja hojas aleatorias; puede desactivarse pasando
+      // el argumento `mostrarHojas = false` al llamar a esta función.
+      if (typeof arguments[4] === 'undefined' || arguments[4]) {
+        if (Math.random() > 0.6) {
+          dibujarHoja((x + x2) / 2, (y + y2) / 2, angulo - Math.PI / 2, 0.95);
+        }
+        if (Math.random() > 0.7) {
+          dibujarHoja((x + x2) / 2 + Math.cos(angulo) * 10, (y + y2) / 2 - Math.sin(angulo) * 10, angulo + Math.PI / 2, 0.85);
+        }
+      }
+    }
+
+    function dibujarHoja(cx, cy, angulo, escala) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angulo);
+      ctx.scale(escala, escala);
+
+      const gradHoja = ctx.createLinearGradient(0, -2, 16, 10);
+      gradHoja.addColorStop(0, "#4C7740");
+      gradHoja.addColorStop(1, "#7AB768");
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(18, -8, 26, 2);
+      ctx.quadraticCurveTo(16, 10, 0, 0);
+      ctx.fillStyle = gradHoja;
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // Dibuja un único pétalo redondeado y "acopado" (como el de una rosa),
+    // asumiendo que el contexto ya está trasladado/rotado a su origen.
+    function dibujarPetaloRosa(radio, colorClaro, colorOscuro) {
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-radio * 0.62, -radio * 0.30, -radio * 0.55, -radio * 0.95, 0, -radio * 1.12);
+      ctx.bezierCurveTo(radio * 0.55, -radio * 0.95, radio * 0.62, -radio * 0.30, 0, 0);
+      ctx.closePath();
+
+      const grad = ctx.createLinearGradient(0, 0, 0, -radio * 1.12);
+      grad.addColorStop(0, colorOscuro);
+      grad.addColorStop(0.55, colorClaro);
+      grad.addColorStop(1, colorClaro);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(150,90,10,0.14)";
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+
+    // Dibuja una rosa amarilla completa combinando varios anillos de pétalos,
+    // desde los exteriores (más grandes y pálidos) a los del centro (más
+    // pequeños y anaranjados), imitando la forma real de una rosa cerrada.
+    function dibujarFlorBouquet(cx, cy, radio, rotBase) {
+      rotBase = typeof rotBase === "number" ? rotBase : Math.random() * Math.PI * 2;
+
+      ctx.save();
+      // sombra de contacto suave debajo de la rosa
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + radio * 0.35, radio * 0.95, radio * 0.45, 0, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(90,55,10,0.10)";
+      ctx.fill();
+      ctx.restore();
+
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      const anillos = [
+        { n: 7, r: radio * 1.02, colA: "#FFE79A", colB: "#F7C346" },
+        { n: 6, r: radio * 0.74, colA: "#FFD453", colB: "#F0A82C" },
+        { n: 5, r: radio * 0.48, colA: "#FDBB2D", colB: "#DE8C16" },
+        { n: 4, r: radio * 0.24, colA: "#F5A623", colB: "#C46F10" }
+      ];
+
+      anillos.forEach((anillo, ringIdx) => {
+        for (let i = 0; i < anillo.n; i++) {
+          const ang =
+            rotBase +
+            ringIdx * 0.32 +
+            (i / anillo.n) * Math.PI * 2 +
+            (Math.random() - 0.5) * 0.18;
+          ctx.save();
+          ctx.rotate(ang);
+          dibujarPetaloRosa(anillo.r, anillo.colA, anillo.colB);
+          ctx.restore();
+        }
+      });
+
+      // pequeño centro cerrado, más oscuro
+      ctx.beginPath();
+      ctx.arc(0, 0, radio * 0.14, 0, Math.PI * 2);
+      ctx.fillStyle = "#B36A0E";
+      ctx.fill();
+
+      // toque de luz superior para dar volumen
+      ctx.beginPath();
+      ctx.ellipse(-radio * 0.12, -radio * 0.55, radio * 0.28, radio * 0.16, -0.4, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.22)";
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // Envoltura en forma de abanico: paneles puntiagudos alternando papel
+    // kraft (marrón) y papel crema/blanco, radiando detrás del ramo — igual
+    // que el papel de floristería típico de la foto de referencia.
+    function dibujarEnvolturaAbanico(cx, cy, ancho, alto) {
+      const capas = 11;
+      const kraft = ["#C6A06B", "#B98D54"];
+      const crema = ["#FBF4E6", "#F3E7CE"];
+
+      for (let i = 0; i < capas; i++) {
+        const t = i / (capas - 1); // 0..1 de izquierda a derecha
+        const angulo = (t - 0.5) * 2.7; // abanico amplio, casi de lado a lado
+        const esKraft = i % 2 === 0;
+        const largo = alto * (0.75 + Math.abs(t - 0.5) * 0.22 + Math.random() * 0.06);
+        const anchoPunta = ancho * 0.13;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(angulo);
+
+        const grad = ctx.createLinearGradient(0, 0, 0, -largo);
+        if (esKraft) {
+          grad.addColorStop(0, kraft[1]);
+          grad.addColorStop(1, kraft[0]);
+        } else {
+          grad.addColorStop(0, crema[1]);
+          grad.addColorStop(1, crema[0]);
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(-anchoPunta * 0.5, 0);
+        ctx.quadraticCurveTo(-anchoPunta * 0.3, -largo * 0.55, 0, -largo);
+        ctx.quadraticCurveTo(anchoPunta * 0.3, -largo * 0.55, anchoPunta * 0.5, 0);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.globalAlpha = 0.97;
+        ctx.fill();
+        ctx.strokeStyle = "rgba(90,60,20,0.10)";
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    }
+
+    // Papel kraft principal que envuelve la base del ramo, en forma de cono,
+    // igual que el cucurucho de papel que sostiene las rosas en la foto.
+    function dibujarConoBase(cx, cy, ancho, alto) {
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      ctx.fillStyle = "rgba(20,10,6,0.10)";
+      ctx.beginPath();
+      ctx.moveTo(-ancho * 0.48, -alto * 0.1);
+      ctx.quadraticCurveTo(0, alto * 0.15, ancho * 0.48, -alto * 0.1);
+      ctx.lineTo(6, alto * 0.95);
+      ctx.closePath();
+      ctx.fill();
+
+      const grad = ctx.createLinearGradient(-ancho * 0.25, -alto * 0.15, ancho * 0.25, alto * 0.9);
+      grad.addColorStop(0, "#E9C48B");
+      grad.addColorStop(0.5, "#D6A868");
+      grad.addColorStop(1, "#A97D48");
+
+      ctx.beginPath();
+      ctx.moveTo(-ancho * 0.5, -alto * 0.18);
+      ctx.quadraticCurveTo(0, alto * 0.1, ancho * 0.5, -alto * 0.18);
+      ctx.lineTo(0, alto * 0.85);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // pliegues sutiles del papel
+      ctx.strokeStyle = "rgba(120,80,35,0.2)";
+      ctx.lineWidth = 1;
+      for (let i = -2; i <= 2; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * ancho * 0.1, -alto * 0.05);
+        ctx.quadraticCurveTo(i * ancho * 0.06, alto * 0.4, i * ancho * 0.02, alto * 0.78);
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
+
+    // Cordel/rafia fino atado con un pequeño lazo, sobre el papel — sencillo,
+    // como el bramante que sujeta el ramo en la foto (sin cinta dorada vistosa).
+    function dibujarCordel(cx, cy, ancho) {
+      ctx.save();
+      ctx.strokeStyle = "#8A6A3C";
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+      ctx.moveTo(cx - ancho * 0.8, cy - 3);
+      ctx.quadraticCurveTo(cx, cy + 9, cx + ancho * 0.8, cy - 3);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx - ancho * 0.8, cy + 4);
+      ctx.quadraticCurveTo(cx, cy + 5, cx + ancho * 0.8, cy + 4);
+      ctx.stroke();
+
+      // pequeño nudo/lazo
+      ctx.beginPath();
+      ctx.ellipse(cx - 5, cy + 2, 6, 9, 5.5, 0, Math.PI * 2);
+      ctx.moveTo(cx + 5, cy + 2);
+      ctx.ellipse(cx + 5, cy + 2, 6, 9, -5.5, 0, Math.PI * 2);
+      ctx.fillStyle = "#9C7A47";
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(cx, cy + 4, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = "#7A5C30";
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function dibujarRamo() {
+      const w = canvas.offsetWidth;
+      const h = canvas.offsetHeight;
+      ctx.clearRect(0, 0, w * 2, h * 2);
+
+      const baseX = w * 0.5;
+
+      // 1) Papel de fondo en abanico (kraft + crema), detrás de las rosas
+      dibujarEnvolturaAbanico(baseX, h * 0.58, w * 1.05, h * 0.62);
+
+      // 2) Cono de papel kraft, cuello estrecho justo bajo las rosas
+      dibujarConoBase(baseX, h * 0.66, w * 0.34, h * 0.28);
+
+      // 3) Cúpula SUPER COMPACTA de rosas amarillas, sin tallos visibles
+      const centroX = w * 0.5;
+      const centroY = h * 0.42;
+      const radioDomo = Math.min(w, h) * 0.38;
+      const rosas = [];
+      const filas = 8;  // más filas = más flores
+
+      for (let f = 0; f < filas; f++) {
+        const t = f / (filas - 1); // 0 arriba, 1 abajo
+        const anchoFila = Math.sin(Math.PI * (1 - t) * 0.9 + 0.15); // más ancho a media altura
+        const porFila = 3 + Math.round(anchoFila * 6);  // más flores por fila
+        for (let i = 0; i < porFila; i++) {
+          const s = porFila === 1 ? 0 : i / (porFila - 1) - 0.5;
+          // Reducer multiplicador de expansión (de 1.7 a 1.35) para mantener compacto
+          const x = centroX + s * radioDomo * (1.35 + anchoFila * 0.3) + (Math.random() - 0.5) * 6;
+          const y = centroY - radioDomo * 0.50 + t * radioDomo * 0.95 + (Math.random() - 0.5) * 5;
+          const radio = 11 + Math.random() * 5 - t * 1.5;  // flores más pequeñas
+          rosas.push({ x, y, radio, z: y + Math.random() * 4 });
+        }
+      }
+
+      // ordenar de atrás hacia adelante para que las de abajo tapen a las de arriba
+      rosas.sort((a, b) => a.z - b.z);
+      rosas.forEach((r) => dibujarFlorBouquet(r.x, r.y, r.radio));
+
+      // 4) Cordel sencillo donde el papel se une a las rosas
+      dibujarCordel(baseX, h * 0.62, w * 0.22);
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("orientationchange", () => {
+      setTimeout(resizeCanvas, 100);
+    });
+    resizeCanvas();
+
+    // ============================================================
+    // 3. FLORES CAYENDO (DOM animado) — solo en zona derecha (ramo)
+    // ============================================================
+
+    const contenedorFlores = document.getElementById("flores-volando");
+    const EMOJIS_FLOR = ["🌻", "💛", "🟡", "✨"];
+
+    function crearFlorVolando() {
+      const flor = document.createElement("span");
+      flor.classList.add("Flores_Amarillas");
+      flor.textContent = EMOJIS_FLOR[Math.floor(Math.random() * EMOJIS_FLOR.length)];
+
+      // Flores solo en la zona central (donde está el ramo) — 35% a 65% del ancho
+      const posX     = 35 + Math.random() * 30;  // centrado
+      const duracion = 3.5 + Math.random() * 3.5;
+      const delay    = Math.random() * 1.2;
+      const top      = -10 + Math.random() * 16;  // comienza arriba
+      const size     = 0.9 + Math.random() * 1.1;
+
+      flor.style.cssText = `
+        left: ${posX}%;
+        top: ${top}%;
+        font-size: ${size}rem;
+        animation-duration: ${duracion}s;
+        animation-delay: ${delay}s;
+        animation-timing-function: ease-in;
+      `;
+
+      contenedorFlores.appendChild(flor);
+      setTimeout(() => flor.remove(), (duracion + delay + 1.2) * 1000);
+    }
+
+    setInterval(crearFlorVolando, 750);
+    for (let i = 0; i < 5; i++) {
+      setTimeout(crearFlorVolando, i * 280);
+    }
+
+    // ============================================================
+    // 4. EFECTO TYPEWRITER
+    // ============================================================
+
+    const elementoCarta = document.getElementById("carta");
+    let charIndex = 0;
+
+    function typewriterPaso() {
+      if (charIndex < TEXTO_AMOR.length) {
+        elementoCarta.textContent += TEXTO_AMOR[charIndex];
+        charIndex++;
+        setTimeout(typewriterPaso, VELOCIDAD_TYPER);
+      }
+    }
+
+    setTimeout(() => typewriterPaso(), 900);
+
+    // ============================================================
+    // 5. CONTADOR DE TIEMPO
+    // ============================================================
+
+    function actualizarContador() {
+      const ahora = new Date();
+      const diff  = ahora - FECHA_INICIO;
+
+      if (diff < 0) {
+        ["dias","horas","minutos","segundos"].forEach(id => {
+          document.getElementById(id).textContent = "00";
+        });
+        return;
+      }
+
+      const seg  = Math.floor(diff / 1000);
+      const dias = Math.floor(seg / 86400);
+      const hrs  = Math.floor((seg % 86400) / 3600);
+      const min  = Math.floor((seg % 3600) / 60);
+      const s    = seg % 60;
+
+      document.getElementById("dias").textContent     = dias;
+      document.getElementById("horas").textContent    = String(hrs).padStart(2, "0");
+      document.getElementById("minutos").textContent  = String(min).padStart(2, "0");
+      document.getElementById("segundos").textContent = String(s).padStart(2, "0");
+    }
+
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
+  </script>
+</body>
+</html>
